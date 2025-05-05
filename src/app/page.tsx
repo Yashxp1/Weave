@@ -1,11 +1,11 @@
 import DarkModeToggle from '@/components/DarkModeToggle';
+import Sidebar from '@/components/Sidebar';
 import React from 'react';
 
 const page = () => {
- 
   return (
-    <div className=" bg-blue-200 text-black dark:bg-[#0A0A0A] dark:text-white h-screen transition-colors">
-      <DarkModeToggle />
+    <div className="dark:bg-dark bg-light h-screen text-dark dark:text-light transition-all">
+      <Sidebar />
     </div>
   );
 };

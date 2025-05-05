@@ -8,7 +8,7 @@ const DarkModeToggle = () => {
   const { darkMode, setDarkMode } = useDarkMode();
   return (
     <div className=''>
-      <button className='transition-all bg-blue-300  rounded-full p-1.5 text-blue-950 ' onClick={() => setDarkMode(!darkMode)}>
+      <button className='transition-all bg-iconBg text-iconTxt  rounded-full p-1.5 ' onClick={() => setDarkMode(!darkMode)}>
         {darkMode ? <Moon/> : <Sun/>}
       </button>
     </div>
