@@ -12,7 +12,7 @@
   --text-dark: #ffffff;
 
   --color-iconBg: #1D1D1D;
-  --color-iconTxt: oklch(87.1% 0.006 286.286)
+  --color-iconTxt: oklch(55.6% 0 0)
 }
 
 @custom-variant dark (&:where(.dark, .dark *))

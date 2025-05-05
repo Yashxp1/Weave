@@ -6,6 +6,7 @@ interface SidebarButtonProp extends ButtonHTMLAttributes<HTMLButtonElement> {
   className?: string;
   icon?: ReactNode;
   onClick?: () => void;
+  iconSize?: number;
 }
 
 const SidebarButton: React.FC<SidebarButtonProp> = ({
@@ -14,12 +15,16 @@ const SidebarButton: React.FC<SidebarButtonProp> = ({
   icon,
   onClick,
 }) => {
+  
   return (
     <button
       onClick={onClick}
-      className={clsx('flex  justify-center  text-iconTxt hover:bg-iconBg transition-all items-center rounded-lg', className)} 
+      className={clsx(
+        'flex px-5 m-1 py-4 dark:hover:bg-iconBg hover:bg-gray-200  transition-all  rounded-lg',
+        className
+      )}
     >
-      {icon && <span className='text-5xl'>{icon }</span>}
+      {icon && <span className="text-iconTxt">{icon}</span>}
       <span>{children}</span>
     </button>
   );
