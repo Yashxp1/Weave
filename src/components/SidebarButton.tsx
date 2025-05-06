@@ -1,5 +1,6 @@
 import { ButtonHTMLAttributes, ReactNode } from 'react';
 import clsx from 'clsx';
+import Link from 'next/link';
 
 interface SidebarButtonProp extends ButtonHTMLAttributes<HTMLButtonElement> {
   children?: ReactNode;
@@ -7,6 +8,7 @@ interface SidebarButtonProp extends ButtonHTMLAttributes<HTMLButtonElement> {
   icon?: ReactNode;
   onClick?: () => void;
   iconSize?: number;
+  href?: string;
 }
 
 const SidebarButton: React.FC<SidebarButtonProp> = ({
@@ -14,11 +16,10 @@ const SidebarButton: React.FC<SidebarButtonProp> = ({
   className,
   icon,
   onClick,
+  href,
 }) => {
-  
-  return (
-    <button
-      onClick={onClick}
+  const content = (
+    <span
       className={clsx(
         'flex px-5 m-1 py-4 dark:hover:bg-iconBg hover:bg-gray-200  transition-all  rounded-lg',
         className
@@ -26,6 +27,16 @@ const SidebarButton: React.FC<SidebarButtonProp> = ({
     >
       {icon && <span className="text-iconTxt">{icon}</span>}
       <span>{children}</span>
+    </span>
+  );
+
+  if (href) {
+    return <Link href={href}>{content}</Link>;
+  }
+
+  return (
+    <button onClick={onClick} className={className}>
+      {content}
     </button>
   );
 };
