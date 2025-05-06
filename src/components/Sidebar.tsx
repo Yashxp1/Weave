@@ -18,11 +18,11 @@ const Sidebar = () => {
           />
         </div>
         <div className="flex flex-col items-center">
-          <SidebarButton href='/home' icon={<Home size={32} />} />
-          <SidebarButton href='/search' icon={<Search size={32} />} />
-          <SidebarButton icon={<Plus size={32} />} />
-          <SidebarButton href="/chat" icon={<Mail size={32} />} />
-          <SidebarButton href='/profile' icon={<UserRound size={32} />} />
+          <SidebarButton href='/home' icon={<Home size={28} />} />
+          <SidebarButton href='/search' icon={<Search size={28} />} />
+          <SidebarButton icon={<Plus size={28} />} />
+          <SidebarButton href="/chat" icon={<Mail size={28} />} />
+          <SidebarButton href='/profile' icon={<UserRound size={28} />} />
         </div>
 
         <div className="flex items-center justify-center py-10">
