@@ -9,7 +9,7 @@ const Sidebar = () => {
   // const [isSelected, setIsSelected] = useState<boolean>(false);
 
   return (
-    <aside className=" h-screen w-fit py-6 sticky top-0 z-10">
+    <aside className="h-screen w-fit py-6 sticky top-0 z-10">
       <div className="h-full w-fit flex flex-col justify-between border-gray-800 rounded-lg">
         <div className="flex items-center justify-center">
           <AudioLines
@@ -18,7 +18,7 @@ const Sidebar = () => {
           />
         </div>
         <div className="flex flex-col items-center">
-          <SidebarButton href='/' icon={<Home size={32} />} />
+          <SidebarButton href='/home' icon={<Home size={32} />} />
           <SidebarButton href='/search' icon={<Search size={32} />} />
           <SidebarButton icon={<Plus size={32} />} />
           <SidebarButton href="/chat" icon={<Mail size={32} />} />

@@ -4,13 +4,12 @@ import React from 'react';
 
 const page = () => {
   return (
-    <div className="dark:bg-dark flex bg-light text-dark dark:text-light transition-all">
-    <Sidebar />
-      {/* <div className="flex justify-center py-10">
-        <Card />
-      </div> */}
+    <div className="dark:bg-dark  bg-light text-dark dark:text-light transition-all">
+
+      <div className=''>
+
+      </div>
     </div>
-  
   );
 };
 
