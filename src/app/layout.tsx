@@ -31,15 +31,11 @@ export default function RootLayout({
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
         <ThemeProvider>
-          <div
-            className="flex
-           dark:bg-dark bg-light text-dark dark:text-light transition-all">
-     
+          <div className="flex h-screen dark:bg-dark bg-light text-dark dark:text-light transition-all">
             <Sidebar />
-
             <div className="flex flex-col flex-grow w-full max-w-[1400px]">
               <Navbar />
-              <main className="flex justify-center py-10">{children}</main>
+              <main className="flex-1 overflow-y-auto">{children}</main>
             </div>
           </div>
         </ThemeProvider>
