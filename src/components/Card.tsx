@@ -26,7 +26,7 @@ const Card = () => {
               </p>
             </div>
 
-            <div className="flex gap-4 pt-6 dark:text-gray-400">
+            <div className="flex gap-2 pt-6 dark:text-gray-400">
               <span className="flex hover:bg-gray-200 transition-all gap-2 items-center dark:hover:bg-[#1E1E1E] p-2 pl-0 rounded-4xl">
                 <Heart size={20} />
                 <span className="text-sm">12.3K</span>
