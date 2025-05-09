@@ -1,10 +1,11 @@
 import React from 'react';
 
 const dummyUsers = [
-  { name: 'Hayien' },
+  { name: 'BLAZE' },
   { name: 'Zeno' },
   { name: 'Karan' },
   { name: 'Laddu' },
+
 ];
 
 const dummyMessages = [
@@ -16,13 +17,13 @@ const dummyMessages = [
 
 const Chat = () => {
   return (
-    <div className="flex w-full bg-white dark:bg-[#181818] border border-[#D5D5D5] dark:border-[#2D2D2D] rounded-4xl">
+    <div className="flex w-full dark:bg-[#181818] border border-[#D5D5D5] dark:border-[#2D2D2D] rounded-4xl">
 
       <div className="w-1/4   p-4 border-r">
         <h2 className="text-lg font-semibold mb-4">Chats</h2>
         <ul className="space-y-3">
           {dummyUsers.map((user, idx) => (
-            <li key={idx} className="flex  items-center gap-3 p-2 hover:bg-gray-200 rounded cursor-pointer">
+            <li key={idx} className="flex items-center gap-3 p-2 hover:bg-gray-200 rounded cursor-pointer">
               <img src="/pfp.png" alt="pfp" className="h-10 w-10 rounded-full" />
               <span className="font-medium">{user.name}</span>
             </li>

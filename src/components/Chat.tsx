@@ -1,7 +1,11 @@
 import React from 'react';
 
 const dummyUsers = [
-  { name: 'Hayien' },
+  { name: 'BLAZE' },
+  { name: 'Zeno' },
+  { name: 'Karan' },
+  { name: 'Laddu' },
+  { name: 'BLAZE' },
   { name: 'Zeno' },
   { name: 'Karan' },
   { name: 'Laddu' },
@@ -17,28 +21,32 @@ const dummyMessages = [
 const Chat = () => {
   return (
     <div className="flex w-full h-full bg-white dark:bg-[#181818] border border-[#D5D5D5] dark:border-[#2D2D2D] rounded-4xl">
-      <div className="w-1/4 h-full dark:bg-[#181818] border border-[#D5D5D5] dark:border-[#2D2D2D] rounded-4xl p-4 border-r">
+      <div className="w-1/4 dark:bg-[#181818] border border-[#D5D5D5] dark:border-[#2D2D2D] rounded-4xl p-4 border-r flex flex-col">
         <h2 className="text-lg font-semibold mb-4">Chats</h2>
-        <ul className="space-y-3">
-          {dummyUsers.map((user, idx) => (
-            <li
-              key={idx}
-              className="flex bg-white  dark:bg-[#181818] border border-[#D5D5D5] dark:border-[#2D2D2D] rounded-4xl items-center gap-3 p-2 dark:hover:bg-iconBg  hover:bg-gray-200 cursor-pointer"
-            >
-              <img
-                src="/pfp.png"
-                alt="pfp"
-                className="h-10 w-10 rounded-full"
-              />
-              <span className="font-medium">{user.name}</span>
-            </li>
-          ))}
-        </ul>
+        <div className="overflow-y-auto flex-1 pr-1">
+          <ul className="space-y-3">
+            {dummyUsers.map((user, idx) => (
+              <li
+                key={idx}
+                className="flex bg-white dark:bg-[#181818] md:border border-[#D5D5D5] dark:border-[#2D2D2D] md:rounded-4xl items-center gap-3 p-2 dark:hover:bg-iconBg hover:bg-gray-200 cursor-pointer"
+              >
+                <img
+                  src="/pfp.png"
+                  alt="pfp"
+                  className="h-10 w-10 rounded-full flex-shrink-0"
+                />
+                <span className="font-medium hidden md:block truncate">
+                  {user.name}
+                </span>
+              </li>
+            ))}
+          </ul>
+        </div>
       </div>
 
       <div className="w-3/4 flex flex-col">
         <div className="flex-1 p-4 overflow-y-auto space-y-2">
-          <div className="border-b flex py-4  border-[#D5D5D5] dark:border-[#2D2D2D]">
+          <div className="border-b flex py-4 border-[#D5D5D5] dark:border-[#2D2D2D]">
             <div className="flex items-center gap-2 justify-center">
               <img
                 src="/pfp.png"
@@ -74,7 +82,7 @@ const Chat = () => {
             placeholder="Type a message..."
             className="flex-1 px-3 py-2 bg-white dark:bg-[#181818] border border-[#D5D5D5] dark:border-[#2D2D2D] rounded-4xl focus:outline-none focus:ring-2 focus:ring-blue-500"
           />
-          <button className="px-4 py-2 bg-blue-700 text-white rounded-4xl transition-all dark:hover:bg-iconBg  hover:bg-black/30">
+          <button className="px-4 py-2 bg-blue-700 text-white rounded-4xl transition-all dark:hover:bg-iconBg hover:bg-black/30">
             Send
           </button>
         </div>
