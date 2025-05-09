@@ -16,13 +16,13 @@ const dummyMessages = [
 
 const Chat = () => {
   return (
-    <div className="flex w-full">
-      {/* Sidebar with Users */}
-      <div className="w-1/4 bg-gray-100 p-4 border-r">
+    <div className="flex w-full bg-white dark:bg-[#181818] border border-[#D5D5D5] dark:border-[#2D2D2D] rounded-4xl">
+
+      <div className="w-1/4   p-4 border-r">
         <h2 className="text-lg font-semibold mb-4">Chats</h2>
         <ul className="space-y-3">
           {dummyUsers.map((user, idx) => (
-            <li key={idx} className="flex items-center gap-3 p-2 hover:bg-gray-200 rounded cursor-pointer">
+            <li key={idx} className="flex  items-center gap-3 p-2 hover:bg-gray-200 rounded cursor-pointer">
               <img src="/pfp.png" alt="pfp" className="h-10 w-10 rounded-full" />
               <span className="font-medium">{user.name}</span>
             </li>
@@ -30,9 +30,9 @@ const Chat = () => {
         </ul>
       </div>
 
-      {/* Chat Area */}
+ 
       <div className="w-3/4 flex flex-col">
-        {/* Chat messages */}
+
         <div className="flex-1 p-4 overflow-y-auto space-y-2">
           {dummyMessages.map((msg, idx) => (
             <div key={idx} className={`flex ${msg.sender === 'You' ? 'justify-end' : 'justify-start'}`}>
@@ -43,7 +43,7 @@ const Chat = () => {
           ))}
         </div>
 
-        {/* Message input */}
+
         <div className="p-4 border-t flex gap-2">
           <input
             type="text"

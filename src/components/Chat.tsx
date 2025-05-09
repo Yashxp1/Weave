@@ -16,41 +16,65 @@ const dummyMessages = [
 
 const Chat = () => {
   return (
-    <div className="flex w-full h-full">
-      {/* Sidebar with Users */}
-      <div className="w-1/4 bg-gray-100 p-4 border-r">
+    <div className="flex w-full h-full bg-white dark:bg-[#181818] border border-[#D5D5D5] dark:border-[#2D2D2D] rounded-4xl">
+      <div className="w-1/4 h-full dark:bg-[#181818] border border-[#D5D5D5] dark:border-[#2D2D2D] rounded-4xl p-4 border-r">
         <h2 className="text-lg font-semibold mb-4">Chats</h2>
         <ul className="space-y-3">
           {dummyUsers.map((user, idx) => (
-            <li key={idx} className="flex items-center gap-3 p-2 hover:bg-gray-200 rounded cursor-pointer">
-              <img src="/pfp.png" alt="pfp" className="h-10 w-10 rounded-full" />
+            <li
+              key={idx}
+              className="flex bg-white  dark:bg-[#181818] border border-[#D5D5D5] dark:border-[#2D2D2D] rounded-4xl items-center gap-3 p-2 dark:hover:bg-iconBg  hover:bg-gray-200 cursor-pointer"
+            >
+              <img
+                src="/pfp.png"
+                alt="pfp"
+                className="h-10 w-10 rounded-full"
+              />
               <span className="font-medium">{user.name}</span>
             </li>
           ))}
         </ul>
       </div>
 
-      {/* Chat Area */}
       <div className="w-3/4 flex flex-col">
-        {/* Chat messages */}
         <div className="flex-1 p-4 overflow-y-auto space-y-2">
+          <div className="border-b flex py-4  border-[#D5D5D5] dark:border-[#2D2D2D]">
+            <div className="flex items-center gap-2 justify-center">
+              <img
+                src="/pfp.png"
+                alt="pfp"
+                className="h-10 w-10 rounded-full"
+              />
+              <p className="text-2xl font-bold">Yash</p>
+            </div>
+          </div>
           {dummyMessages.map((msg, idx) => (
-            <div key={idx} className={`flex ${msg.sender === 'You' ? 'justify-end' : 'justify-start'}`}>
-              <div className={`p-3 rounded-lg max-w-xs ${msg.sender === 'You' ? 'bg-blue-500 text-white' : 'bg-gray-200 text-gray-800'}`}>
+            <div
+              key={idx}
+              className={`flex ${
+                msg.sender === 'You' ? 'justify-end' : 'justify-start'
+              }`}
+            >
+              <div
+                className={`p-3 rounded-full max-w-xs ${
+                  msg.sender === 'You'
+                    ? 'bg-blue-500 text-white'
+                    : 'bg-gray-200 text-gray-800'
+                }`}
+              >
                 <p>{msg.text}</p>
               </div>
             </div>
           ))}
         </div>
 
-        {/* Message input */}
-        <div className="p-4 border-t flex gap-2">
+        <div className="p-4 border-t border-[#D5D5D5] dark:border-[#2D2D2D] flex gap-2">
           <input
             type="text"
             placeholder="Type a message..."
-            className="flex-1 p-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+            className="flex-1 px-3 py-2 bg-white dark:bg-[#181818] border border-[#D5D5D5] dark:border-[#2D2D2D] rounded-4xl focus:outline-none focus:ring-2 focus:ring-blue-500"
           />
-          <button className="px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600">
+          <button className="px-4 py-2 bg-blue-700 text-white rounded-4xl transition-all dark:hover:bg-iconBg  hover:bg-black/30">
             Send
           </button>
         </div>
