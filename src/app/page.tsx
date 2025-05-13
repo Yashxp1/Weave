@@ -9,9 +9,9 @@ const page = () => {
           LOGIN
         </button>
       </Link>
-      <Link href="/signup">
+      <Link href="/register">
         <button className="border  cursor-pointer p-3 border-blue-500 bg-blue-950 rounded-lg">
-          SIGNUP
+          Register
         </button>
       </Link>
     </div>
