@@ -12,7 +12,7 @@ const ClientLayout = ({ children }: { children: React.ReactNode }) => {
   const showNavbar = pathname === '/home';
 
   return (
-    <div className="flex h-screen dark:bg-dark bg-light text-dark dark:text-light transition-all">
+    <div className="flex h-screen w-full dark:bg-dark bg-light text-dark dark:text-light transition-all">
       {showSidebar && <Sidebar />}
       <div className="flex flex-col flex-grow">
         {showNavbar && <Navbar />}
