@@ -4,6 +4,7 @@ import './globals.css';
 import { ThemeProvider } from '@/contexts/ThemeContext';
 import Sidebar from '@/components/Sidebar';
 import Navbar from '@/components/Navbar';
+import ClientLayput from '@/components/ClientLayput';
 
 const geistSans = Geist({
   variable: '--font-geist-sans',
@@ -31,13 +32,7 @@ export default function RootLayout({
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
         <ThemeProvider>
-          <div className="flex h-screen dark:bg-dark bg-light text-dark dark:text-light transition-all">
-            <Sidebar />
-            <div className="flex flex-col flex-grow w-full max-w-[1400px]">
-              <Navbar />
-              <main className="flex-1 overflow-y-auto">{children}</main>
-            </div>
-          </div>
+          <ClientLayput>{children}</ClientLayput>
         </ThemeProvider>
       </body>
     </html>

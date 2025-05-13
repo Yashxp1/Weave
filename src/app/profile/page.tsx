@@ -5,7 +5,7 @@ const profileBtns = ['Posts', 'Replies', 'Media'];
 
 const page = () => {
   return (
-    <div className="w-full flex justify-center pt-10">
+    <div className="w-full mt-16 flex justify-center pt-10">
       <div className="bg-white dark:bg-[#181818] border border-[#D5D5D5] dark:border-[#2D2D2D] rounded-4xl w-full max-w-[90%] lg:max-w-[50%] transition-all overflow-y-auto">
         <div className="flex flex-col w-full gap-3 p-8 ">
           <div className="flex justify-between w-full p-4">
@@ -40,7 +40,7 @@ const page = () => {
           ))}
         </div>
         <div className="flex justify-center items-center text-3xl py-10 font-extrabold text-gray-700">
-          WOW!! it's all empty. start post!!!
+          WOW!! it's all empty. start posting!!!
         </div>
       </div>
     </div>

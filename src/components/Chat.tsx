@@ -20,7 +20,7 @@ const dummyMessages = [
 
 const Chat = () => {
   return (
-    <div className="flex w-full h-full bg-white dark:bg-[#181818] border border-[#D5D5D5] dark:border-[#2D2D2D] rounded-4xl">
+    <div className="flex w-full my-8 h-full bg-white dark:bg-[#181818] border border-[#D5D5D5] dark:border-[#2D2D2D] rounded-4xl">
       <div className="w-1/4 dark:bg-[#181818] border border-[#D5D5D5] dark:border-[#2D2D2D] rounded-4xl p-4 border-r flex flex-col">
         <h2 className="text-lg font-semibold mb-4">Chats</h2>
         <div className="overflow-y-auto flex-1 pr-1">
@@ -82,7 +82,7 @@ const Chat = () => {
             placeholder="Type a message..."
             className="flex-1 px-3 py-2 bg-white dark:bg-[#181818] border border-[#D5D5D5] dark:border-[#2D2D2D] rounded-4xl focus:outline-none focus:ring-2 focus:ring-blue-500"
           />
-          <button className="px-4 py-2 bg-blue-700 text-white rounded-4xl transition-all dark:hover:bg-iconBg hover:bg-black/30">
+          <button className="px-4 py-2 bg-blue-700 text-white rounded-4xl transition-all  hover:bg-gray-200 hover:text-black">
             Send
           </button>
         </div>
