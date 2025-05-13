@@ -1,4 +1,4 @@
-import Card from '@/components/Card'
+import Card from '@/components/ui/Card'
 import React from 'react'
 
 const page = () => {

@@ -5,7 +5,7 @@ import { usePathname } from 'next/navigation';
 import React from 'react';
 import Navbar from './Navbar';
 
-const ClientLayput = ({ children }: { children: React.ReactNode }) => {
+const ClientLayout = ({ children }: { children: React.ReactNode }) => {
   const pathname = usePathname();
 
   const showSidebar = ['/chat', '/profile', "/home"].includes(pathname);
@@ -22,4 +22,4 @@ const ClientLayput = ({ children }: { children: React.ReactNode }) => {
   );
 };
 
-export default ClientLayput;
+export default ClientLayout;

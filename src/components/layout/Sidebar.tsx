@@ -1,8 +1,8 @@
 'use client';
 
-import React, { useState } from 'react';
-import DarkModeToggle from './DarkModeToggle';
-import SidebarButton from './SidebarButton';
+import React from 'react';
+import DarkModeToggle from '../ui/DarkModeToggle';
+import SidebarButton from '../shared/SidebarButton';
 import { AudioLines, Home, Mail, Plus, Search, UserRound } from 'lucide-react';
 import Link from 'next/link';
 
