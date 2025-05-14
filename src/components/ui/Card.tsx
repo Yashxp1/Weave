@@ -1,4 +1,4 @@
-import { Heart, MessageSquare, Send } from 'lucide-react';
+import { Heart, MessageSquare, Repeat2, Send } from 'lucide-react';
 import React from 'react';
 
 const Card = () => {
@@ -16,18 +16,20 @@ const Card = () => {
           <div>
             <div className="space-x-2">
               <span>yashxp1</span>
-              <span className="text-[#2D2D2D] dark:text-[#aaa] text-sm">6h</span>
+              <span className="text-[#2D2D2D] dark:text-[#aaa] text-sm">
+                6h
+              </span>
             </div>
             <div>
               <p className="break-words">
-                Lorem ipsum dolor sit amet consectetur adipisicing elit. Eligendi
-                ipsa veniam architecto amet autem illum reprehenderit rem
-                molestiae quis ea!
+                Lorem ipsum dolor sit amet consectetur adipisicing elit.
+                Eligendi ipsa veniam architecto amet autem illum reprehenderit
+                rem molestiae quis ea!
               </p>
             </div>
 
             <div className="flex gap-2 pt-6 dark:text-gray-400">
-              <span className="flex hover:bg-gray-200 transition-all gap-2 items-center dark:hover:bg-[#1E1E1E] p-2 pl-0 rounded-4xl">
+              <span className="flex hover:text-pink-600 hover:bg-gray-200 transition-all gap-2 items-center dark:hover:bg-[#1E1E1E] p-2 pl-0 rounded-4xl">
                 <Heart size={20} />
                 <span className="text-sm">12.3K</span>
               </span>
@@ -35,6 +37,10 @@ const Card = () => {
               <span className="flex hover:bg-gray-200 dark:hover:bg-[#1E1E1E] p-2 rounded-4xl gap-2 items-center">
                 <MessageSquare size={20} />
                 <span className="text-sm">1.8K</span>
+              </span>
+              <span className="flex hover:bg-gray-200 hover:text-green-400 dark:hover:bg-[#1E1E1E] p-2 rounded-4xl gap-2 items-center">
+                <Repeat2 size={23}/>
+                <span className="text-sm">219</span>
               </span>
               <span className="flex hover:bg-gray-200 dark:hover:bg-[#1E1E1E] p-2 rounded-4xl gap-2 items-center">
                 <Send size={20} />
