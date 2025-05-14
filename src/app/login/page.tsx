@@ -1,3 +1,4 @@
+import Link from 'next/link';
 import React from 'react';
 
 const page = () => {
@@ -22,13 +23,15 @@ const page = () => {
             className="dark:bg-[#1E1E1E] font-semibold bg-gray-200 px-2 py-3 rounded-lg outline-0"
           />
         </div>
-        <div className='flex flex-col gap-3'>
+        <div className="flex flex-col gap-3">
           <button className=" bg-white transition-colors border border-[#D5D5D5] dark:border-[#2D2D2D] text-black py-2 md:w-96 w-72 rounded-lg font-semibold hover:bg-gray-100">
             Login
           </button>
-          <button className=" bg-white transition-colors border border-[#D5D5D5] dark:border-[#2D2D2D] text-black py-2 md:w-96 w-72 rounded-lg font-semibold hover:bg-gray-100">
-            Register
-          </button>
+          <Link href={'/register'}>
+            <button className=" bg-white transition-colors border border-[#D5D5D5] dark:border-[#2D2D2D] text-black py-2 md:w-96 w-72 rounded-lg font-semibold hover:bg-gray-100">
+              Register
+            </button>
+          </Link>
         </div>
       </div>
     </div>
