@@ -48,16 +48,22 @@ model Post {
 }
 
 model Comment {
-  id       String @id @default(cuid())
-  content  String
-  authorId String
-  postId   String
+  id        String    @id @default(cuid())
+  content   String
+  authorId  String
+  postId    String
+  parentId  String?
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+  deletedAt DateTime?
 
-  createdAt DateTime @default(now())
+  author   User      @relation(fields: [authorId], references: [id])
+  post     Post      @relation(fields: [postId], references: [id])
+  parent   Comment?  @relation("CommentParent", fields: [parentId], references: [id])
+  children Comment[] @relation("CommentParent")
 
-  author User @relation(fields: [authorId], references: [id])
-  post   Post @relation(fields: [postId], references: [id])
-  
+  @@index([postId])
+  @@index([authorId])
 }
 
 model Like {
@@ -70,6 +76,7 @@ model Like {
   post Post @relation(fields: [postId], references: [id])
 
   @@unique([userId, postId])
+  @@index([postId])
 }
 
 model Repost {
@@ -82,6 +89,7 @@ model Repost {
   post Post @relation(fields: [postId], references: [id])
 
   @@unique([userId, postId])
+  @@index([postId])
 }
 
 model Follow {
@@ -89,12 +97,14 @@ model Follow {
   followerId  String
   followingId String
   createdAt   DateTime @default(now())
- 
-  follower   User @relation("following", fields: [followerId], references: [id])
 
-  following   User @relation("followers", fields: [followingId], references: [id])
+  follower User @relation("following", fields: [followerId], references: [id])
+
+  following User @relation("followers", fields: [followingId], references: [id])
 
   @@unique([followerId, followingId])
+  @@index([followerId])
+  @@index([followingId])
 }
 
 model Message {
