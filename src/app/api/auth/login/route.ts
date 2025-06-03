@@ -1,42 +1,50 @@
-import prisma from '@/lib/prisma';
-import bcrypt from 'bcryptjs';
-import { NextApiRequest, NextApiResponse } from 'next';
-import { z } from 'zod';
+  import prisma from '@/lib/prisma';
+  import bcrypt from 'bcryptjs';
+  import { NextRequest, NextResponse } from 'next/server';
 
-const schema = z.object({
-  email: z.string().email('Please enter a valid email'),
-  password: z.string().min(6, 'Passowrd must be at least 6 characters long'),
-});
+  import { z } from 'zod';
 
-export const handler = async (req: NextApiRequest, res: NextApiResponse) => {
-  if (req.method === 'Post') {
-    return res.status(405).json({ message: 'Method not allowed' });
-  }
+  const schema = z.object({
+    email: z.string().email('Please enter a valid email'),
+    password: z.string().min(6, 'Passowrd must be at least 6 characters long'),
+  });
 
-  const result = schema.parse(req.body);
+  export async function POST(req: NextRequest) {
+    const body = await req.json()
+    const result = schema.parse(body);
 
-  const { email, password } = result;
+    const { email, password } = result;
 
-  try {
-    const user = await prisma.user.findUnique({ where: { email } });
+    try {
+      const user = await prisma.user.findUnique({ where: { email } });
 
-    if (!user || !hashedPassword) {
-      return res.status(409).json({ message: 'Invalid credentials' });
+      if (!user || !user.hashedPassword) {
+        return NextResponse.json(
+          { message: 'Invalid credentials' },
+          { status: 409 }
+        );
+      }
+
+      const isPasswordCorrect = await bcrypt.compare(
+        password,
+        user.hashedPassword
+      );
+
+      if (!isPasswordCorrect) {
+        return NextResponse.json(
+          { message: 'Invalid credentials' },
+          { status: 401 }
+        );
+      }
+
+      return NextResponse.json(
+        { userId: user.id, message: 'User logged in successfully' },
+        { status: 201 }
+      );
+    } catch (error) {
+      return NextResponse.json(
+        { message: 'Server Error', error },
+        { status: 500 }
+      );
     }
-
-    const isPasswordCorrect = await bcrypt.compare(
-      password,
-      user.hashedPassword
-    );
-
-    if (!isPasswordCorrect) {
-      return res.status(401).json({ message: 'Invalid credentials' });
-    }
-
-    return res
-      .status(201)
-      .json({ userId: user.id, message: 'User logged in successfully' });
-  } catch (error) {
-    return res.status(500).json({ message: 'Server Error', error });
   }
-};
