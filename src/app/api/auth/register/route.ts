@@ -1,7 +1,7 @@
 import { z } from 'zod';
-import { NextApiResponse, NextApiRequest } from 'next';
 import prisma from '@/lib/prisma';
 import bcrypt from 'bcryptjs';
+import { NextRequest, NextResponse } from 'next/server';
 
 const schema = z.object({
   name: z.string().min(1, 'Name is required.'),
@@ -11,37 +11,43 @@ const schema = z.object({
     .min(6, 'You password must be at least 6 characters long'),
 });
 
-const handler = async (req: NextApiRequest, res: NextApiResponse) => {
-  if (req.method !== 'POST') {
-    return res.status(405).json({ message: 'Method NOT allowed!' });
-  }
-
-  const result = schema.parse(req.body);
-
-  const { name, email, password } = result;
-
+export async function POST(req: NextRequest) {
   try {
+    const body = await req.json();
+
+    const result = schema.parse(body);
+
+    const { name, email, password } = result;
+
     const existingUser = await prisma.user.findUnique({ where: { email } });
 
     if (existingUser) {
-      return res.status(409).json({ message: 'User already exists' });
+      return NextResponse.json(
+        { message: 'User already exists' },
+        { status: 409 }
+      );
     }
 
     const hashedPassword = await bcrypt.hash(password, 10);
-    console.log('HASHED PASSWORD----------------->>>>', hashedPassword);
-
+    
     const newUser = await prisma.user.create({
       data: {
         name,
         email,
-        hashedPassword: hashedPassword,
+        hashedPassword,
       },
     });
-    
-    return res.status(201).json({ message: 'user registered successfully' });
 
+    return NextResponse.json(
+      { message: 'user registered successfully', data: newUser },
+      { status: 201 }
+    );
   } catch (error) {
-    return res.status(400).json({ message: 'Invalid Input', error: error });
+    console.error('REGISTER ERROR:', error);
+
+    return NextResponse.json(
+      { message: '---SERVER ERROR---' },
+      { status: 500 }
+    );
   }
-};
-export default handler;
+}
