@@ -2,6 +2,7 @@ import { z } from 'zod';
 import prisma from '@/lib/prisma';
 import bcrypt from 'bcryptjs';
 import { NextRequest, NextResponse } from 'next/server';
+import generateToken from '@/lib/token';
 
 const schema = z.object({
   name: z.string().min(1, 'Name is required.'),
@@ -29,7 +30,7 @@ export async function POST(req: NextRequest) {
     }
 
     const hashedPassword = await bcrypt.hash(password, 10);
-    
+
     const newUser = await prisma.user.create({
       data: {
         name,
@@ -37,6 +38,8 @@ export async function POST(req: NextRequest) {
         hashedPassword,
       },
     });
+
+    generateToken(newUser.id);
 
     return NextResponse.json(
       { message: 'user registered successfully', data: newUser },
