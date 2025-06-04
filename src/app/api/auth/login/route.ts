@@ -38,10 +38,11 @@ export async function POST(req: NextRequest) {
       );
     }
 
-     generateToken(user.id);
+     const token = await generateToken(user.id);
+ 
 
     return NextResponse.json(
-      { userId: user.id, message: 'User logged in successfully' },
+      { userId: user.id, message: 'User logged in successfully', token},
       { status: 201 }
     );
   } catch (error) {
