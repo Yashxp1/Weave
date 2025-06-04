@@ -38,7 +38,7 @@ export async function POST(req: NextRequest) {
       );
     }
 
-    generateToken(user.id);
+     generateToken(user.id);
 
     return NextResponse.json(
       { userId: user.id, message: 'User logged in successfully' },
