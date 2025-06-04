@@ -14,7 +14,5 @@ export default async function generateToken(userId: unknown) {
     path: '/',
   });
 
-  console.log("TOKEN--------------> ", token)
-
   return token;
 }
