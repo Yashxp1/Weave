@@ -42,7 +42,7 @@ const Card = () => {
                 <Repeat2 size={23}/>
                 <span className="text-sm">219</span>
               </span>
-              <span className="flex hover:bg-gray-200 dark:hover:bg-[#1E1E1E] p-2 rounded-4xl gap-2 items-center">
+              <span className="flex hover:bg-gray-200 hover:text-blue-500 dark:hover:bg-[#1E1E1E] p-2 rounded-4xl gap-2 items-center">
                 <Send size={20} />
               </span>
             </div>
