@@ -64,3 +64,42 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({ message: 'Server Error' }, { status: 500 });
   }
 }
+
+export async function GET(
+  req: NextRequest,
+  { params }: { params: { postId: string } }
+) {
+  const { postId } = params;
+  try {
+    const comments = await prisma.comment.findMany({
+      where: {
+        postId: postId,
+      },
+      orderBy: {
+        createdAt: 'desc',
+      },
+
+      include: {
+        author: {
+          select: {
+            id: true,
+            name: true,
+            profilePic: true,
+          },
+        },
+      },
+    });
+
+    if (!comments) {
+      return NextResponse.json(
+        {
+          response: comments,
+        },
+        { status: 200 }
+      );
+    }
+  } catch (error) {
+    console.error('Error Fetching comments', error);
+    return NextResponse.json({ message: 'Server Error' }, { status: 500 });
+  }
+}
