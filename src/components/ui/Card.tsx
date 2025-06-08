@@ -34,7 +34,7 @@ const Card = () => {
                 <span className="text-sm">12.3K</span>
               </span>
 
-              <span className="flex hover:bg-gray-200 dark:hover:bg-[#1E1E1E] p-2 rounded-4xl gap-2 items-center">
+              <span className="flex hover:bg-gray-200 hover:text-blue-500 dark:hover:bg-[#1E1E1E] p-2 rounded-4xl gap-2 items-center">
                 <MessageSquare size={20} />
                 <span className="text-sm">1.8K</span>
               </span>
