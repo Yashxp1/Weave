@@ -25,7 +25,7 @@ const SidebarButton: React.FC<SidebarButtonProp> = ({
         className
       )}
     >
-      {icon && <span className="text-iconTxt">{icon}</span>}
+      {icon && <span className="text-iconTxt ">{icon}</span>}
       <span>{children}</span>
     </span>
   );

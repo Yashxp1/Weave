@@ -1,3 +1,4 @@
+import Modal from '@/components/layout/Modal';
 import Link from 'next/link';
 import React from 'react';
 
