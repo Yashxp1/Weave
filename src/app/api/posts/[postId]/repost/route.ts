@@ -43,7 +43,7 @@ export async function POST(
       },
     });
 
-    return NextResponse.json({
+    return NextResponse.json({message: "SUCCESSFULLY RESPOTED ON YOUR ACCOUNT",
       response: repost,
     });
   } catch (error) {
@@ -78,6 +78,15 @@ export async function DELETE(
         },
       },
     });
+
+    if (!deleteRepost) {
+      return NextResponse.json(
+        {
+          message: 'NO RESPOST FOUND',
+        },
+        { status: 404 }
+      );
+    }
 
     return NextResponse.json(
       { message: 'Repost removed successfullt' },
