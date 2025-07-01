@@ -1,13 +1,13 @@
-import { ModeToggle } from '@/components/ModeToggle';
+import Hero from '@/components/Landing/Hero';
+import Navbar from '@/components/Landing/Navbar';
+// import { ModeToggle } from '@/components/ModeToggle';
 import React from 'react';
 
 const page = () => {
   return (
-    <div className="flex justify-between p-3">
-      <h1>Landing page</h1>
-      <div>
-        <ModeToggle />
-      </div>
+    <div className="light bg-white text-black">
+      <Navbar />
+      <Hero />
     </div>
   );
 };
