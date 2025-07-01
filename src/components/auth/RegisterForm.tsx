@@ -3,6 +3,7 @@ import { Registerschema } from '@/schema/Auth';
 import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { date, z } from 'zod';
+import { PacmanLoader } from 'react-spinners';
 import { zodResolver } from '@hookform/resolvers/zod';
 
 import {
@@ -18,11 +19,13 @@ import { Button } from '../ui/button';
 import { Label } from '@radix-ui/react-dropdown-menu';
 import { Input } from '../ui/input';
 import Link from 'next/link';
+import { useAuthStore } from '@/store/authStore';
+import { Toaster } from 'react-hot-toast';
+import { useRouter } from 'next/navigation';
 
 const RegisterForm = () => {
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState('');
-  const [success, setSuccess] = useState('');
+  const { register, isRegistering } = useAuthStore();
+  const router = useRouter();
 
   const form = useForm<z.infer<typeof Registerschema>>({
     resolver: zodResolver(Registerschema),
@@ -34,19 +37,17 @@ const RegisterForm = () => {
   });
 
   const onSubmit = async (data: z.infer<typeof Registerschema>) => {
-    console.log('FORM SUBMITTED');
+    console.log(data);
+    const success = await register(data);
+    if (success) {
+      router.push('/dashboard');
+    }
   };
 
   return (
     <Card className="w-full max-w-sm">
       <CardHeader>
         <CardTitle className="text-center text-xl">Register</CardTitle>
-        {/* <CardDescription>
-          Enter your email below to login to your account
-          </CardDescription> */}
-        {/* <CardAction>
-          <Button variant="link">Sign Up</Button>
-          </CardAction> */}
       </CardHeader>
       <CardContent>
         <form onSubmit={form.handleSubmit(onSubmit)}>
@@ -59,6 +60,11 @@ const RegisterForm = () => {
                 type="name"
                 placeholder="John Doe"
               />
+               {form.formState.errors.name && (
+                <p className="text-xs text-red-500">
+                  {form.formState.errors.name.message}
+                </p>
+              )}
             </div>
 
             <div className="grid gap-2">
@@ -69,6 +75,11 @@ const RegisterForm = () => {
                 type="email"
                 placeholder="johndoe@example.com"
               />
+               {form.formState.errors.email && (
+                <p className="text-xs text-red-500">
+                  {form.formState.errors.email.message}
+                </p>
+              )}
             </div>
             <div className="grid gap-2">
               <div className="flex items-center">
@@ -80,10 +91,15 @@ const RegisterForm = () => {
                 type="password"
                 placeholder="••••••••••••"
               />
+              {form.formState.errors.password && (
+                <p className="text-xs text-red-500">
+                  {form.formState.errors.password.message}
+                </p>
+              )}
             </div>
             <div className="">
               <Button type="submit" className="w-full">
-                Register
+                {isRegistering ? <PacmanLoader /> : 'Register'}
               </Button>
             </div>
           </div>
@@ -96,15 +112,7 @@ const RegisterForm = () => {
               Already have an account? Login
             </Button>
           </Link>
-          {/* <Link href="/login">
-            <Button type="submit" className="w-full">
-              Login
-            </Button>
-          </Link> */}
         </div>
-        {/* <Button variant="outline" className="w-full">
-          Login with Google
-          </Button> */}
       </CardFooter>
     </Card>
   );
