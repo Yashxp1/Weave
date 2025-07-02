@@ -64,6 +64,7 @@ export async function GET() {
           select: {
             id: true,
             name: true,
+            email:true,
             profilePic: true,
           },
         },
