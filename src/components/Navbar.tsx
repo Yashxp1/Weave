@@ -1,29 +1,11 @@
-import { AudioLines, Waves } from 'lucide-react';
-import React from 'react';
-import { Button } from './ui/button';
-import Link from 'next/link';
-import { ModeToggle } from './ModeToggle';
-
 const Navbar = () => {
   return (
-    <nav className="fixed left-0 w-full z-50 flex justify-center">
-      <div className="w-full shadow-2xs px-2 text-center bg-white/20 dark:bg-black/20 border-b border-gray-800 py-2  backdrop-blur-sm">
-        <div className="flex justify-between items-center">
-          <Link href="/">
-            <div className="flex items-center justify-center gap-2">
-              <AudioLines />
-              <p className="font-semibold text-xl">weave</p>
-            </div>
-          </Link>
-          <div className="gap-2 flex justify-center items-center">
-            <ModeToggle />
-
-            <Link href="/login"></Link>
-          </div>
-        </div>
+    <nav className="sticky top-0 z-10 w-full bg-white/80 dark:bg-black/30 border-b backdrop-blur-md">
+      <div className="px-4 py-2 flex items-center justify-between">
+        <h1 className="font-semibold">Home</h1>
+        {/* Add buttons or icons here */}
       </div>
     </nav>
   );
 };
-
-export default Navbar;
+ export default Navbar
