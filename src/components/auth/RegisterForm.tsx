@@ -19,7 +19,7 @@ import { Button } from '../ui/button';
 import { Label } from '@radix-ui/react-dropdown-menu';
 import { Input } from '../ui/input';
 import Link from 'next/link';
-import { useAuthStore } from '@/store/authStore';
+import { useAuthStore } from '@/store/apiStore';
 import { Toaster } from 'react-hot-toast';
 import { useRouter } from 'next/navigation';
 

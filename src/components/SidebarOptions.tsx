@@ -9,6 +9,8 @@ import {
 import React from 'react';
 import Link from 'next/link';
 import { ModeToggle } from './ModeToggle';
+import { Button } from './ui/button';
+import { ToggelTheme } from './ToggelTheme';
 
 const options = [
   { type: 'Home', url: '/', icon: LayoutDashboard },
@@ -37,9 +39,16 @@ const SidebarOptions = () => {
         </Link>
       ))}
 
-      {/* Theme Toggle at Bottom */}
+
       <div className="mt-auto pt-10 px-4">
         <ModeToggle />
+      </div>
+
+      <div className="mt-auto pt-10 px-4">
+        <ToggelTheme />
+      </div>
+      <div className="mt-auto pt-10 px-4">
+        <Button variant='destructive' className='font-semibold'>Log out</Button>
       </div>
     </div>
   );
