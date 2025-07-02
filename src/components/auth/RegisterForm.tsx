@@ -45,7 +45,7 @@ const RegisterForm = () => {
   };
 
   return (
-    <Card className="w-full max-w-sm">
+    <Card className="w-full font-semibold max-w-sm">
       <CardHeader>
         <CardTitle className="text-center text-xl">Register</CardTitle>
       </CardHeader>
@@ -60,7 +60,7 @@ const RegisterForm = () => {
                 type="name"
                 placeholder="John Doe"
               />
-               {form.formState.errors.name && (
+              {form.formState.errors.name && (
                 <p className="text-xs text-red-500">
                   {form.formState.errors.name.message}
                 </p>
@@ -75,7 +75,7 @@ const RegisterForm = () => {
                 type="email"
                 placeholder="johndoe@example.com"
               />
-               {form.formState.errors.email && (
+              {form.formState.errors.email && (
                 <p className="text-xs text-red-500">
                   {form.formState.errors.email.message}
                 </p>
@@ -98,8 +98,12 @@ const RegisterForm = () => {
               )}
             </div>
             <div className="">
-              <Button type="submit" className="w-full">
-                {isRegistering ? <PacmanLoader /> : 'Register'}
+              <Button type="submit" className="w-full font-semibold">
+                {isRegistering ? (
+                  <PacmanLoader color="rgba(255, 246, 77, 1)" />
+                ) : (
+                  'Register'
+                )}
               </Button>
             </div>
           </div>
@@ -108,7 +112,10 @@ const RegisterForm = () => {
       <CardFooter className="flex-col gap-2">
         <div className="w-full bg-">
           <Link href="/login" className="w-full">
-            <Button variant="link" className="w-full justify-center">
+            <Button
+              variant="link"
+              className="w-full justify-center font-semibold"
+            >
               Already have an account? Login
             </Button>
           </Link>

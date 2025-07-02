@@ -41,7 +41,7 @@ const LoginForm = () => {
   };
 
   return (
-    <Card className="w-full max-w-sm">
+    <Card className="w-full font-semibold max-w-sm">
       <CardHeader>
         <CardTitle className="text-center text-xl">Login</CardTitle>
       </CardHeader>
@@ -79,7 +79,7 @@ const LoginForm = () => {
               )}
             </div>
             <div className="">
-              <Button type="submit" className="w-full">
+              <Button type="submit" className="w-full font-semibold">
                 {isLoggingIN ? <PacmanLoader size={10} /> : 'Login'}
               </Button>
             </div>
@@ -89,7 +89,7 @@ const LoginForm = () => {
       <CardFooter className="flex-col gap-2">
         <div className="w-full bg-">
           <Link href="/register" className="w-full">
-            <Button variant="link" className="w-full justify-center">
+            <Button variant="link" className="w-full justify-center font-semibold">
               Don't have an account? Register
             </Button>
           </Link>

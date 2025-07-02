@@ -72,7 +72,7 @@ const Hero = () => {
         <div className="flex justify-center items-center pt-12">
           <p className="text-4xl font-extrabold">Wait, There's more!</p>
         </div>
-        <div>
+        <div className=''>
           <Features />
         </div>
       </div>

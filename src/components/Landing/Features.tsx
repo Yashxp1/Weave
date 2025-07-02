@@ -1,18 +1,14 @@
 import React from 'react';
-import Video from '../icons/Video';
-import Chat from '../icons/Chat';
-import FollowFeat from './FollowFeat';
-import Image from 'next/image';
-import { Button } from '../ui/button';
+import { RiVideoOnAiFill } from 'react-icons/ri';
+import { PiChats } from 'react-icons/pi';
+import { MdPermMedia } from 'react-icons/md';
+import { RiChatHeartFill } from 'react-icons/ri';
 
 const Features = () => {
-
   return (
-    <div>
-      <div className="flex py-10 hover:border-gray-300 rounded-xl justify-center border">
-        <div className="flex justify-center items-center gap-4 2xl:w-[60%] p-8 ">
-          <FollowFeat />
-        </div>
+    <div className="flex justify-evenly mt-10 px-32 py-12 border">
+      <div>
+        <p className="text-9xl font-extrabold text-yellow-500 ">1M+</p>
       </div>
     </div>
   );
