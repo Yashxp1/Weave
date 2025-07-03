@@ -6,7 +6,7 @@ export async function POST(
   req: NextRequest,
   { params }: { params: { postId: string } }
 ) {
-  const { postId } = await params;
+  const { postId } = params;
 
   try {
     const user = await getUserByToken(req);
