@@ -18,13 +18,30 @@ export async function POST(req: NextRequest) {
       return NextResponse.json({ message: 'Unauthorized' }, { status: 401 });
     }
 
-    const decoded = jwt.verify(token, process.env.JWT_SECRET as string) as {
-      userId: string;
-    };
+    if (!process.env.JWT_SECRET) {
+      console.error('JWT_SECRET is not defined');
+      return NextResponse.json(
+        { message: 'Server configuration error' },
+        { status: 500 }
+      );
+    }
+
+    let decoded;
+    try {
+      decoded = jwt.verify(token, process.env.JWT_SECRET) as {
+        userId?: string;
+      };
+    } catch (error) {
+      console.error('JWT verification failed:', error);
+      return NextResponse.json(
+        { message: 'Unauthorized (invalid token)' },
+        { status: 401 }
+      );
+    }
 
     if (!decoded?.userId) {
       return NextResponse.json(
-        { message: 'Unauthorized (invalid token)' },
+        { message: 'Unauthorized (invalid token payload)' },
         { status: 401 }
       );
     }
@@ -32,39 +49,29 @@ export async function POST(req: NextRequest) {
     const authorId = decoded.userId;
 
     const body = await req.json();
-    const result = schema.parse(body);
+    let result;
+    try {
+      result = schema.parse(body);
+    } catch (error) {
+      if (error instanceof z.ZodError) {
+        return NextResponse.json(
+          { message: 'Validation failed', errors: error.errors },
+          { status: 400 }
+        );
+      }
+      throw error; // Re-throw unexpected errors
+    }
 
     const { content, image } = result;
 
     const post = await prisma.post.create({
       data: { content, image, authorId },
-    });
-
-    return NextResponse.json(
-      {
-        message: 'Post created successfully',
-        post: post,
-      },
-      { status: 200 }
-    );
-  } catch (error) {
-    return NextResponse.json(
-      { message: 'Server Error', error },
-      { status: 500 }
-    );
-  }
-}
-
-export async function GET() {
-  try {
-    const posts = await prisma.post.findMany({
-      orderBy: { createdAt: 'desc' },
       include: {
         author: {
           select: {
             id: true,
             name: true,
-            email:true,
+            email: true,
             profilePic: true,
           },
         },
@@ -78,9 +85,98 @@ export async function GET() {
       },
     });
 
-    return NextResponse.json({ posts }, { status: 200 });
+    return NextResponse.json(
+      {
+        message: 'Post created successfully',
+        ...post,
+        likedByUser: false,
+      },
+      { status: 201 }
+    );
   } catch (error) {
-    console.log('Error getting posts --------->', error);
-    return NextResponse.json({ message: 'Sever Error' }, { status: 500 });
+    console.error('Error creating post:', error);
+    return NextResponse.json({ message: 'Server Error' }, { status: 500 });
+  }
+}
+
+async function addLikedByUser(posts: any[], userId: string) {
+  return Promise.all(
+    posts.map(async (post) => {
+      const like = await prisma.like.findUnique({
+        where: {
+          userId_postId: {
+            userId,
+            postId: post.id,
+          },
+        },
+      });
+
+      return {
+        ...post,
+        likedByUser: !!like,
+      };
+    })
+  );
+}
+
+export async function GET(req: NextRequest) {
+  try {
+    const token = (await cookies()).get('jwt')?.value;
+    console.log('JWT token in request:', token);
+
+    if (!token) {
+      return NextResponse.json({ message: 'Unauthorized' }, { status: 401 });
+    }
+
+    if (!process.env.JWT_SECRET) {
+      console.error('JWT_SECRET is not defined');
+      return NextResponse.json(
+        { message: 'Server configuration error' },
+        { status: 500 }
+      );
+    }
+
+    let decoded;
+    try {
+      decoded = jwt.verify(token, process.env.JWT_SECRET) as {
+        userId?: string;
+      };
+    } catch (error) {
+      console.error('JWT verification failed:', error);
+      return NextResponse.json(
+        { message: 'Unauthorized (invalid token)' },
+        { status: 401 }
+      );
+    }
+
+    if (!decoded?.userId) {
+      return NextResponse.json(
+        { message: 'Unauthorized (invalid token payload)' },
+        { status: 401 }
+      );
+    }
+
+    const userId = decoded.userId;
+
+    const posts = await prisma.post.findMany({
+      orderBy: { createdAt: 'desc' },
+      include: {
+        author: true,
+        _count: {
+          select: {
+            likes: true,
+            comments: true,
+            reposts: true,
+          },
+        },
+      },
+    });
+
+    const postsWithLiked = await addLikedByUser(posts, userId);
+
+    return NextResponse.json({ posts: postsWithLiked }, { status: 200 });
+  } catch (error) {
+    console.error('Error getting posts:', error);
+    return NextResponse.json({ message: 'Server Error' }, { status: 500 });
   }
 }
