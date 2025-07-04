@@ -6,18 +6,13 @@ export async function POST(
   req: NextRequest,
   { params }: { params: { postId: string } }
 ) {
-  const { postId } = params;
+  const { postId } = await params; 
 
   try {
     const user = await getUserByToken(req);
 
     if (!user) {
-      return NextResponse.json(
-        {
-          message: 'Unauthorized',
-        },
-        { status: 401 }
-      );
+      return NextResponse.json({ message: 'Unauthorized' }, { status: 401 });
     }
 
     const existingLike = await prisma.like.findUnique({
@@ -29,7 +24,10 @@ export async function POST(
       },
     });
 
+    let liked: boolean;
+
     if (existingLike) {
+     
       await prisma.like.delete({
         where: {
           userId_postId: {
@@ -38,23 +36,30 @@ export async function POST(
           },
         },
       });
-
-      return NextResponse.json(
-        {
-          message: 'Unliked the post',
-        },
-        { status: 200 }
-      );
+      liked = false;
     } else {
+     
       await prisma.like.create({
         data: {
           userId: user.id,
           postId,
         },
       });
-
-      return NextResponse.json({ message: 'Liked the post' }, { status: 201 });
+      liked = true;
     }
+
+
+    const likeCount = await prisma.like.count({
+      where: { postId },
+    });
+
+    return NextResponse.json(
+      {
+        liked,
+        likeCount,
+      },
+      { status: 200 }
+    );
   } catch (error) {
     console.error('Error liking the post', error);
     return NextResponse.json({ message: 'Server Error' }, { status: 500 });

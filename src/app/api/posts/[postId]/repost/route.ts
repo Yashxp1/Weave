@@ -29,78 +29,94 @@ export async function POST(
       },
     });
 
+    let reposted: boolean;
+
     if (existingRepost) {
-      return NextResponse.json(
-        { message: 'Already reposted' },
-        { status: 400 }
-      );
+      await prisma.repost.delete({
+        where: {
+          userId_postId: {
+            userId: user.id,
+            postId,
+          },
+        },
+      });
+      reposted = false;
+    } else {
+      await prisma.repost.create({
+        data: {
+          userId,
+          postId,
+        },
+      });
+      reposted = true;
     }
 
-    const repost = await prisma.repost.create({
-      data: {
-        userId,
-        postId,
-      },
+    const repostCount = await prisma.repost.count({
+      where: { postId },
     });
 
-    return NextResponse.json({message: "SUCCESSFULLY RESPOTED ON YOUR ACCOUNT",
-      response: repost,
-    });
+    return NextResponse.json(
+      {
+        reposted,
+        repostCount,
+      },
+      { status: 200 }
+    );
   } catch (error) {
     console.error('Error reposting', error);
     return NextResponse.json({ message: 'Server Error' }, { status: 500 });
   }
 }
 
-export async function DELETE(
-  req: NextRequest,
-  { params }: { params: { postId: string } }
-) {
-  const { postId } = await params;
+// export async function DELETE(
+//   req: NextRequest,
+//   { params }: { params: { postId: string } }
+// ) {
+//   const { postId } = await params;
 
-  try {
-    const user = await getUserByToken(req);
+//   try {
+//     const user = await getUserByToken(req);
 
-    if (!user) {
-      return NextResponse.json(
-        { message: 'User not authorized' },
-        { status: 401 }
-      );
-    }
+//     if (!user) {
+//       return NextResponse.json(
+//         { message: 'User not authorized' },
+//         { status: 401 }
+//       );
+//     }
 
-    const userId = user.id;
+//     const userId = user.id;
 
-    const deleteRepost = await prisma.repost.delete({
-      where: {
-        userId_postId: {
-          userId,
-          postId,
-        },
-      },
-    });
+//     const deleteRepost = await prisma.repost.delete({
+//       where: {
+//         userId_postId: {
+//           userId,
+//           postId,
+//         },
+//       },
+//     });
 
-    if (!deleteRepost) {
-      return NextResponse.json(
-        {
-          message: 'NO RESPOST FOUND',
-        },
-        { status: 404 }
-      );
-    }
+//     if (!deleteRepost) {
+//       return NextResponse.json(
+//         {
+//           message: 'NO RESPOST FOUND',
+//         },
+//         { status: 404 }
+//       );
+//     }
 
-    return NextResponse.json(
-      { message: 'Repost removed successfullt' },
-      { status: 200 }
-    );
-  } catch (error) {
-    if (error === 'P2025') {
-      return NextResponse.json(
-        { message: 'Repost not found' },
-        { status: 404 }
-      );
-    }
+//     return NextResponse.json(
+//       { message: 'Repost removed successfullt' },
+//       { status: 200 }
+//     );
+//   } catch (error) {
+//     if (error === 'P2025') {
+//       return NextResponse.json(
+//         { message: 'Repost not found' },
+//         { status: 404 }
+//       );
+//     }
 
-    console.error('Error Deleting repost', error);
-    return NextResponse.json({ message: 'Server' }, { status: 500 });
-  }
-}
+//     console.error('Error Deleting repost', error);
+//     return NextResponse.json({ message: 'Server' }, { status: 500 });
+//   }
+// }
