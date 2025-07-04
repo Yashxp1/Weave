@@ -1,6 +1,7 @@
 import './globals.css';
 import { ThemeProvider } from '@/components/theme-provider';
 import { Instrument_Sans } from 'next/font/google';
+import LayoutShell from '@/components/LayoutShell';
 
 const InstrumentSansfont = Instrument_Sans({
   subsets: ['latin'],
@@ -14,15 +15,14 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={`${InstrumentSansfont.className}`}>
+      <body className={InstrumentSansfont.className}>
         <ThemeProvider
           attribute="class"
           defaultTheme="system"
           enableSystem
           disableTransitionOnChange
         >
-          
-          {children}
+          <LayoutShell>{children}</LayoutShell>
         </ThemeProvider>
       </body>
     </html>

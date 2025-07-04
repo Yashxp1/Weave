@@ -34,7 +34,7 @@ const SidebarOptions = () => {
         <Link key={idx} href={url}>
           <div className="flex items-center gap-4 px-4 py-2 hover:bg-black/5 dark:hover:bg-white/5 rounded-full w-fit transition-all">
             <Icon size={22} />
-            <span className="text-base font-medium">{type}</span>
+            <span className="text-base font-semibold">{type}</span>
           </div>
         </Link>
       ))}
