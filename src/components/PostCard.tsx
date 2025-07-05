@@ -5,9 +5,17 @@ import { useAuthStore } from '@/store/apiStore';
 import { formatDistanceToNow } from 'date-fns';
 import { SkeletonCard } from './Skeleton';
 import Image from 'next/image';
+import { useRouter } from 'next/navigation';
 
 const PostCard = () => {
   const { posts, getPosts, isLoading, likePost, repostPost } = useAuthStore();
+
+  const router = useRouter();
+
+  // const handleDynmaicPost = () => {
+  //   const dynamicPost = posts.id
+  //    router.push(`/dashboard/${dynamicPost}}`);
+  // }
 
   useEffect(() => {
     getPosts();
@@ -48,7 +56,12 @@ const PostCard = () => {
                   </span>
                 </div>
 
-                <p className="break-words pt-2">{post.content}</p>
+                <p
+                  onClick={() => router.push(`/dashboard/${post.id}`)}
+                  className="break-words pt-2"
+                >
+                  {post.content}
+                </p>
 
                 {post.image && (
                   <Image
