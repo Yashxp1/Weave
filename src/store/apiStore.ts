@@ -45,6 +45,21 @@ type Post = {
   };
 };
 
+type Comment = {
+  id: string;
+  content: string;
+  image: string | null;
+  authorId: string;
+  createdAt: string;
+  updatedAt: string;
+  author: string;
+  likedByUser: Boolean;
+  _count: {
+    comments: number;
+    likes: number;
+  };
+};
+
 type AuthStore = {
   authUser: AuthUser | null;
   isRegistering: boolean;
@@ -57,6 +72,7 @@ type AuthStore = {
   login: (data: LoginData) => Promise<boolean>;
 
   getPosts: () => Promise<boolean>;
+  getSinglePost: (postId: string) => Promise<void>;
   likePost: (postId: string) => Promise<void>;
   repostPost: (postId: string) => Promise<void>;
 };
@@ -104,13 +120,26 @@ export const useAuthStore = create<AuthStore>((set, get) => ({
     set({ isLoading: true });
     try {
       const res = await axios.get<{ posts: Post[] }>(`${baseURL}/posts`);
-      set({ posts: res.data.posts }); // 👈 correct access
+      // console.log(res.data)/
+      set({ posts: res.data.posts });
       return true;
     } catch (error: any) {
       toast.error(error.response?.data?.message || 'Error loading posts');
       return false;
     } finally {
       set({ isLoading: false });
+    }
+  },
+
+  getSinglePost: async (postId: string) => {
+    try {
+      const res = await axios.get(`${baseURL}/posts/${postId}`);
+      console.log(res.data);
+
+      return res.data;
+    } catch (error: any) {
+      toast.error(error.response?.data?.message || 'Error loading posts');
+      return null;
     }
   },
 
