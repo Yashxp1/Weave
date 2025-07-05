@@ -12,7 +12,7 @@ const schema = z.object({
 export async function POST(req: NextRequest) {
   try {
     const token = (await cookies()).get('jwt')?.value;
-    console.log('JWT token in request:', token);
+    // console.log('JWT token in request:', token);
 
     if (!token) {
       return NextResponse.json({ message: 'Unauthorized' }, { status: 401 });
@@ -122,7 +122,7 @@ async function addLikedByUser(posts: any[], userId: string) {
 export async function GET(req: NextRequest) {
   try {
     const token = (await cookies()).get('jwt')?.value;
-    console.log('JWT token in request:', token);
+    // console.log('JWT token in request:', token);
 
     if (!token) {
       return NextResponse.json({ message: 'Unauthorized' }, { status: 401 });
