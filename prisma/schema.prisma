@@ -50,6 +50,7 @@ model Post {
 model Comment {
   id        String    @id @default(cuid())
   content   String
+  image     String?
   authorId  String
   postId    String
   parentId  String?
