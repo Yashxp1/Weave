@@ -12,16 +12,30 @@ export async function GET(
       where: {
         id: postId,
       },
+      include: {
+        author: {
+          select: {
+            id: true,
+            name: true,
+            email: true,
+            profilePic: true,
+          },
+        },
+        _count: {
+          select: {
+            comments: true,
+            likes: true,
+            reposts: true,
+          },
+        },
+      },
     });
 
     if (!post) {
       return NextResponse.json({ message: 'POST NOT FOUND!' }, { status: 404 });
     }
 
-    return NextResponse.json(
-      { message: 'Signle post fetched', response: post },
-      { status: 200 }
-    );
+    return NextResponse.json(post, { status: 200 });
   } catch (error) {
     console.error('Error getting the posts', error);
     return NextResponse.json({ message: 'Server Error' }, { status: 500 });
