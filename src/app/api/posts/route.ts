@@ -59,7 +59,7 @@ export async function POST(req: NextRequest) {
           { status: 400 }
         );
       }
-      throw error; // Re-throw unexpected errors
+      throw error;
     }
 
     const { content, image } = result;
