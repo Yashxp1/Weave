@@ -3,10 +3,12 @@ import prisma from '@/lib/prisma';
 import { NextResponse, NextRequest } from 'next/server';
 import { z } from 'zod';
 
+
 const schema = z.object({
   content: z.string().min(1),
   // postId: z.string(),
   parentId: z.string().optional(),
+  image: z.string().url().optional().or(z.literal('')),
 });
 
 export async function POST(
@@ -27,8 +29,8 @@ export async function POST(
       return NextResponse.json({ message: 'Invalid Input' }, { status: 400 });
     }
 
-    const { content,  parentId } = result.data;
-    const {postId} = params
+    const { content, parentId, image } = result.data;
+    const { postId } = await params;
 
     const post = await prisma.post.findUnique({ where: { id: postId } });
 
@@ -53,6 +55,7 @@ export async function POST(
     const newComment = await prisma.comment.create({
       data: {
         content,
+        image: image || null,
         postId,
         authorId: user.id,
         parentId: parentId || null,
@@ -73,11 +76,12 @@ export async function GET(
   req: NextRequest,
   { params }: { params: { postId: string } }
 ) {
-  const { postId } = params;
+  const { postId } = await params;
   try {
     const comments = await prisma.comment.findMany({
       where: {
         postId: postId,
+        parentId: null,
       },
       orderBy: {
         createdAt: 'desc',
@@ -88,7 +92,19 @@ export async function GET(
           select: {
             id: true,
             name: true,
+            image: true,
             profilePic: true,
+          },
+        },
+        children: {
+          include: {
+            author: {
+              select: {
+                id: true,
+                name: true,
+                profilePic: true,
+              },
+            },
           },
         },
       },
@@ -97,11 +113,13 @@ export async function GET(
     if (!comments) {
       return NextResponse.json(
         {
-          response: comments,
+          response: 'No comments found',
         },
-        { status: 200 }
+        { status: 401 }
       );
     }
+
+    return NextResponse.json({ comments }, { status: 200 });
   } catch (error) {
     console.error('Error Fetching comments', error);
     return NextResponse.json({ message: 'Server Error' }, { status: 500 });
