@@ -1,6 +1,7 @@
 import { create } from 'zustand';
 import { toast } from 'react-hot-toast';
 import axios from 'axios';
+import { NextResponse } from 'next/server';
 
 const baseURL = 'http://localhost:3000/api';
 
@@ -75,6 +76,8 @@ type AuthStore = {
   getSinglePost: (postId: string) => Promise<void>;
   likePost: (postId: string) => Promise<void>;
   repostPost: (postId: string) => Promise<void>;
+  getComments: (postId: string) => Promise<void>;
+  postComments: (postId: string, content: string) => Promise<void>;
 };
 
 export const useAuthStore = create<AuthStore>((set, get) => ({
@@ -193,6 +196,35 @@ export const useAuthStore = create<AuthStore>((set, get) => ({
       }));
     } catch (error) {
       toast.error('Error Reposting');
+    }
+  },
+
+  postComments: async (postId: string, content: string) => {
+    set({ isLoading: true });
+    try {
+      const res = await axios.post(`${baseURL}/posts/${postId}/comments`, {
+        content,
+      });
+      return res.data;
+    } catch (error: any) {
+      toast.error(error.response?.data?.message || 'Error posting comment');
+      return null;
+    } finally {
+      set({ isLoading: false });
+    }
+  },
+
+  getComments: async (postId: string) => {
+    set({ isLoading: true });
+    try {
+      const res = await axios.get(`${baseURL}/posts/${postId}/comments`);
+      // console.log()
+      return res.data;
+    } catch (error: any) {
+      toast.error(error.response?.data?.message || 'Error loading comments');
+      return null;
+    } finally {
+      set({ isLoading: false });
     }
   },
 }));
