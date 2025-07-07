@@ -31,6 +31,7 @@ export async function GET(req: NextRequest) {
       where: {
         id: decoded.userId,
       },
+
       select: {
         name: true,
         id: true,
@@ -40,6 +41,7 @@ export async function GET(req: NextRequest) {
         createdAt: true,
         updatedAt: true,
         posts: {
+          orderBy: { createdAt: 'desc' },
           select: {
             id: true,
             content: true,
@@ -67,7 +69,7 @@ export async function GET(req: NextRequest) {
       followingCount: user.following.length,
     });
   } catch (error) {
-    console.log(error)
+    console.log(error);
     return NextResponse.json({ message: 'Server Error' }, { status: 500 });
   }
 }
