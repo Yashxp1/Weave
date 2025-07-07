@@ -61,8 +61,27 @@ type Comment = {
   };
 };
 
+type Profile = {
+  id: string;
+  name: string;
+  email: string;
+  profilePic?: string;
+  image?: string;
+  createdAt: string;
+  updatedAt: string;
+  followerCount: number;
+  followingCount: number;
+  posts: {
+    id: string;
+    content: string;
+    image?: string | null;
+    createdAt: string;
+  };
+};
+
 type AuthStore = {
   authUser: AuthUser | null;
+  profile: Profile | null;
   isRegistering: boolean;
   isLoggingIN: boolean;
   isLoading: boolean;
@@ -78,10 +97,12 @@ type AuthStore = {
   repostPost: (postId: string) => Promise<void>;
   getComments: (postId: string) => Promise<void>;
   postComments: (postId: string, content: string) => Promise<void>;
+  getProfile: () => Promise<void>;
 };
 
 export const useAuthStore = create<AuthStore>((set, get) => ({
   authUser: null,
+  profile: null,
   isRegistering: false,
   isLoggingIN: false,
   isLoggedIn: false,
@@ -218,11 +239,22 @@ export const useAuthStore = create<AuthStore>((set, get) => ({
     set({ isLoading: true });
     try {
       const res = await axios.get(`${baseURL}/posts/${postId}/comments`);
-      // console.log()
       return res.data;
     } catch (error: any) {
       toast.error(error.response?.data?.message || 'Error loading comments');
       return null;
+    } finally {
+      set({ isLoading: false });
+    }
+  },
+
+  getProfile: async () => {
+    set({ isLoading: true });
+    try {
+      const res = await axios.get(`${baseURL}/profile`);
+      set({ profile: res.data });
+    } catch (error: any) {
+      toast.error(error.response?.data?.message || 'Unable to laod profile');
     } finally {
       set({ isLoading: false });
     }
