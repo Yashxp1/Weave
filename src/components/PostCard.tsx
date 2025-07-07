@@ -22,7 +22,7 @@ const PostCard = () => {
   }, []);
 
   return (
-    <div className="w-full flex flex-col items-center pt-10 gap-6">
+    <div className="w-full flex flex-col items-center gap-6">
       {isLoading ? (
         <div className="space-y-5">
           <SkeletonCard></SkeletonCard>
@@ -34,12 +34,19 @@ const PostCard = () => {
         posts.map((post) => (
           <div
             key={post.id}
-            className=" border border-[#D5D5D5] dark:border-[#2D2D2D] rounded-xl w-full transition-all overflow-hidden"
+            className=" border-b w-full transition-all overflow-hidden"
           >
-            <div className="flex w-full gap-3 p-8">
+            <div className="flex w-full gap-3 py-4 px-5">
               <div className="flex">
-                <img
+                {/* <img
                   src={post.author.profilePic || '/default-pfp.png'}
+                  alt="pfp"
+                  className="rounded-full h-10 w-10 object-cover border border-[#D5D5D5] dark:border-[#2D2D2D]"
+                /> */}
+                <Image
+                  src={post.author.profilePic || '/pfp.png'}
+                  width={1200}
+                  height={1000}
                   alt="pfp"
                   className="rounded-full h-10 w-10 object-cover border border-[#D5D5D5] dark:border-[#2D2D2D]"
                 />
@@ -55,27 +62,27 @@ const PostCard = () => {
                     })}
                   </span>
                 </div>
+                <div className='dark:hover:bg-white/3 hover:bg-black/3 px-1.5 transition-all rounded-md py-2'>
+                  <p
+                    onClick={() => router.push(`/dashboard/${post.id}`)}
+                    className="break-words cursor-pointer"
+                  >
+                    {post.content}
+                  </p>
 
-                <p
-                  onClick={() => router.push(`/dashboard/${post.id}`)}
-                  className="break-words pt-2"
-                >
-                  {post.content}
-                </p>
+                  {post.image && (
+                    <Image
+                      // src={post.image}
+                      src="/pfp.png"
+                      width={1200}
+                      height={1000}
+                      alt="pfp"
+                      className="rounded-xl border mt-4 max-h-[300px] object-cover"
+                    />
+                  )}
+                </div>
 
-                {post.image && (
-                  <Image
-                    // src={post.image}
-                    src="/pfp.png"
-                    width={1200}
-                    height={1000}
-                    // alt="pfp"
-                    alt="Post"
-                    className="rounded-xl border mt-4 max-h-[300px] object-cover"
-                  />
-                )}
-
-                <div className="flex gap-4 pt-6  dark:text-gray-400">
+                <div className="flex gap-4 pt-1 text-black/50 dark:text-white/50">
                   <span className="flex hover:text-pink-500 hover:bg-gray-200 transition-all gap-2 items-center dark:hover:bg-[#1E1E1E] p-2 rounded-4xl">
                     <Heart
                       size={20}

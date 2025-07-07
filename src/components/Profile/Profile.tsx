@@ -1,10 +1,12 @@
 'use client';
 
 import React, { useEffect, useState } from 'react';
-import { Button } from './ui/button';
+import { Button } from '../ui/button';
 import Image from 'next/image';
 import { useAuthStore } from '@/store/apiStore';
 import { date } from 'zod';
+import GetPosts from './GetPosts';
+import Link from 'next/link';
 
 const Profile = () => {
   const { profile, getProfile, isLoading } = useAuthStore();
@@ -36,7 +38,7 @@ const Profile = () => {
             <Button variant="outline" size="sm">
               Edit Profile
             </Button>
-            <Button size="sm">Follow</Button>
+            {/* <Button size="sm">Follow</Button> */}
           </div>
 
           <div className="mb-4">
@@ -54,7 +56,7 @@ const Profile = () => {
           </div>
 
           <div className="flex flex-wrap gap-4 mb-4 text-sm text-muted-foreground">
-            <div className="flex items-center gap-1">
+            {/* <div className="flex items-center gap-1">
               <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
                 <path
                   fillRule="evenodd"
@@ -63,7 +65,7 @@ const Profile = () => {
                 />
               </svg>
               <span>San Francisco, CA</span>
-            </div>
+            </div> */}
             <div className="flex items-center gap-1">
               <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
                 <path
@@ -84,38 +86,38 @@ const Profile = () => {
 
           <div className="flex gap-6 mb-6">
             <div className="flex items-center gap-1">
-              <span className="font-bold text-foreground">{profile.followerCount}</span>
+              <span className="font-bold text-foreground">
+                {profile.followerCount}
+              </span>
               <span className="text-muted-foreground">Followers</span>
             </div>
             <div className="flex items-center gap-1">
-              <span className="font-bold text-foreground">{profile.followingCount}</span>
+              <span className="font-bold text-foreground">
+                {profile.followingCount}
+              </span>
               <span className="text-muted-foreground">Following</span>
             </div>
           </div>
 
           <div className="border-b border-border">
-            <nav className="flex space-x-8">
-              <button className="py-4 px-1 border-b-2 border-primary font-medium text-sm text-primary">
+            <nav className="flex justify-evenly pb-2">
+              <Button variant='ghost' className="">
                 Posts
-              </button>
-              <button className="py-4 px-1 border-b-2 border-transparent font-medium text-sm text-muted-foreground hover:text-foreground hover:border-border">
-                Replies
-              </button>
-              <button className="py-4 px-1 border-b-2 border-transparent font-medium text-sm text-muted-foreground hover:text-foreground hover:border-border">
-                Media
-              </button>
-              <button className="py-4 px-1 border-b-2 border-transparent font-medium text-sm text-muted-foreground hover:text-foreground hover:border-border">
-                Likes
-              </button>
+              </Button>
+
+              <Link href="/profile/replies">
+                <Button variant='ghost' className="">Replies</Button>
+              </Link>
+
+              <Link href="/profile/likes">
+                <Button variant='ghost' className="">Likes</Button>
+              </Link>
             </nav>
           </div>
-
-          <div className="py-6">
-            <div className="text-center text-muted-foreground">
-              <p>Posts will appear here...</p>
-            </div>
-          </div>
         </div>
+      </div>
+      <div className=" py-4 border-b px-6 text-md">
+        <GetPosts></GetPosts>
       </div>
     </div>
   );
