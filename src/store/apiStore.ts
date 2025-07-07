@@ -54,7 +54,7 @@ type Comment = {
   createdAt: string;
   updatedAt: string;
   author: string;
-  likedByUser: Boolean;
+  likedByUser: boolean;
   _count: {
     comments: number;
     likes: number;
@@ -76,7 +76,7 @@ type Profile = {
     content: string;
     image?: string | null;
     createdAt: string;
-  };
+  }[];
 };
 
 type AuthStore = {
@@ -130,7 +130,7 @@ export const useAuthStore = create<AuthStore>((set, get) => ({
       const res = await axios.post<AuthUser>(`${baseURL}/auth/login`, data);
       set({ authUser: res.data });
       toast.success('Login successful');
-      isLoggedIn: true;
+      set({ authUser: res.data, isLoggedIn: true });
       return true;
     } catch (error: any) {
       toast.error(error.response?.data?.message || 'Login failed');
@@ -209,7 +209,7 @@ export const useAuthStore = create<AuthStore>((set, get) => ({
                 ReposetedByUser: reposted,
                 _count: {
                   ...post._count,
-                  reposts: post._count.likes + (reposted ? 1 : -1),
+                  reposts: post._count.reposts + (reposted ? 1 : -1),
                 },
               }
             : post
