@@ -37,6 +37,7 @@ export async function GET(req: NextRequest) {
         id: true,
         email: true,
         profilePic: true,
+        comments:true,
         image: true,
         createdAt: true,
         updatedAt: true,
