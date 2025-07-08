@@ -7,10 +7,13 @@ import { useAuthStore } from '@/store/apiStore';
 import { date } from 'zod';
 import GetPosts from './GetPosts';
 import Link from 'next/link';
+import { fetchNews } from '@/store/newsApi';
 
 const Profile = () => {
   const { profile, getProfile, isLoading } = useAuthStore();
 
+  
+  // fetchNews()
   useEffect(() => {
     getProfile();
   }, []);
@@ -116,7 +119,7 @@ const Profile = () => {
           </div>
         </div>
       </div>
-      <div className=" py-4 border-b px-6 text-md">
+      <div className=" pt-4 border-b px-6 text-md">
         <GetPosts></GetPosts>
       </div>
     </div>
