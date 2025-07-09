@@ -3,7 +3,6 @@ import prisma from '@/lib/prisma';
 import { NextResponse, NextRequest } from 'next/server';
 import { z } from 'zod';
 
-
 const schema = z.object({
   content: z.string().min(1),
   // postId: z.string(),
@@ -125,3 +124,5 @@ export async function GET(
     return NextResponse.json({ message: 'Server Error' }, { status: 500 });
   }
 }
+
+// export async function POST(req: NextRequest) {}
