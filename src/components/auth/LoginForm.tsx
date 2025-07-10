@@ -19,9 +19,10 @@ import Link from 'next/link';
 import { useAuthStore } from '@/store/apiStore';
 import { PacmanLoader } from 'react-spinners';
 import { useRouter } from 'next/navigation';
+import { Toaster } from 'react-hot-toast';
 
 const LoginForm = () => {
-  const { login, isLoggingIN } = useAuthStore();
+  const { login, isLoading } = useAuthStore();
   const router = useRouter();
 
   const form = useForm<z.infer<typeof Loginschema>>({
@@ -80,7 +81,7 @@ const LoginForm = () => {
             </div>
             <div className="">
               <Button type="submit" className="w-full font-semibold">
-                {isLoggingIN ? <PacmanLoader size={10} /> : 'Login'}
+                {isLoading ? <PacmanLoader size={10} /> : 'Login'}
               </Button>
             </div>
           </div>
@@ -95,6 +96,7 @@ const LoginForm = () => {
           </Link>
         </div>
       </CardFooter>
+      <Toaster/>
     </Card>
   );
 };

@@ -1,6 +1,7 @@
 import { create } from 'zustand';
 import { toast } from 'react-hot-toast';
 import axios from 'axios';
+import { date } from 'zod';
 
 const baseURL = 'http://localhost:3000/api';
 
@@ -78,8 +79,6 @@ type Profile = {
   }[];
 };
 
-
-
 type AuthStore = {
   authUser: AuthUser | null;
   profile: Profile | null;
@@ -91,12 +90,14 @@ type AuthStore = {
 
   register: (data: RegisterData) => Promise<boolean>;
   login: (data: LoginData) => Promise<boolean>;
+  logout: () => Promise<boolean>;
 
+  createPost: (content: string) => Promise<void>;
   getPosts: () => Promise<boolean>;
   getSinglePost: (postId: string) => Promise<void>;
   likePost: (postId: string) => Promise<void>;
   repostPost: (postId: string) => Promise<void>;
-  getComments: (postId: string) => Promise<void>;
+  getComments: (postId: string) => Promise<Comment>;
   postComments: (postId: string, content: string) => Promise<void>;
   getProfile: () => Promise<void>;
 };
@@ -139,6 +140,34 @@ export const useAuthStore = create<AuthStore>((set, get) => ({
       return false;
     } finally {
       // set({ isAuthorized: false });
+    }
+  },
+
+  logout: async () => {
+    try {
+      const res = await axios.post(`${baseURL}/auth/logout`);
+      res.data;
+      toast.success('Logout successful');
+      return true;
+    } catch (error: any) {
+      toast.error(error.response?.data?.message || 'Logged out successfully');
+      return false;
+    }
+  },
+
+  createPost: async (content: string) => {
+    set({ isLoading: true });
+    try {
+      const res = await axios.post(`${baseURL}/posts`, {
+        content,
+      });
+      // set({ posts: res.data.posts });
+      return res.data;
+    } catch (error: any) {
+      toast.error(error.response?.data?.message || 'Error posting');
+      // return false;
+    } finally {
+      set({ isLoading: false });
     }
   },
 

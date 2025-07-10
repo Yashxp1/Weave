@@ -40,7 +40,7 @@ const RegisterForm = () => {
     console.log(data);
     const success = await register(data);
     if (success) {
-      router.push('/dashboard');
+      router.push('/login');
     }
   };
 
@@ -121,6 +121,7 @@ const RegisterForm = () => {
           </Link>
         </div>
       </CardFooter>
+      <Toaster/>
     </Card>
   );
 };
