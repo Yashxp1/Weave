@@ -53,8 +53,8 @@ const FetchComments = () => {
                 <p className="text-sm mt-1">{cmt.content}</p>
                 <div className="flex items-center space-x-6 mt-2 py-2">
                   <Heart size={16} className="text-gray-500 " />
-                  <MessageSquare size={16} className="text-gray-500" />
-                  <Send size={16} className="text-gray-500" />
+                  {/* <MessageSquare size={16} className="text-gray-500" />
+                  <Send size={16} className="text-gray-500" /> */}
                 </div>
               </div>
             </div>

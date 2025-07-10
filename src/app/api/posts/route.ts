@@ -1,7 +1,9 @@
 import prisma from '@/lib/prisma';
+import generateToken from '@/lib/token';
 import jwt from 'jsonwebtoken';
 import { cookies } from 'next/headers';
 import { NextRequest, NextResponse } from 'next/server';
+import { json } from 'stream/consumers';
 import { z } from 'zod';
 
 const schema = z.object({
@@ -73,6 +75,12 @@ export async function POST(req: NextRequest) {
             name: true,
             email: true,
             profilePic: true,
+            followers: true,
+            following: true,
+            createdAt: true,
+            posts: true,
+            comments: true,
+            likes: true,
           },
         },
         _count: {
@@ -180,3 +188,4 @@ export async function GET(req: NextRequest) {
     return NextResponse.json({ message: 'Server Error' }, { status: 500 });
   }
 }
+

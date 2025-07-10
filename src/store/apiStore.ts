@@ -1,7 +1,6 @@
 import { create } from 'zustand';
 import { toast } from 'react-hot-toast';
 import axios from 'axios';
-import { NextResponse } from 'next/server';
 
 const baseURL = 'http://localhost:3000/api';
 
@@ -79,11 +78,13 @@ type Profile = {
   }[];
 };
 
+
+
 type AuthStore = {
   authUser: AuthUser | null;
   profile: Profile | null;
   isRegistering: boolean;
-  isLoggingIN: boolean;
+  // isAuthorized: boolean;
   isLoading: boolean;
   isLoggedIn: boolean;
   posts: Post[];
@@ -104,7 +105,7 @@ export const useAuthStore = create<AuthStore>((set, get) => ({
   authUser: null,
   profile: null,
   isRegistering: false,
-  isLoggingIN: false,
+  // isAuthorized: false,
   isLoggedIn: false,
   isLoading: false,
   posts: [],
@@ -125,8 +126,9 @@ export const useAuthStore = create<AuthStore>((set, get) => ({
   },
 
   login: async (data) => {
-    set({ isLoggingIN: true });
+    // set({ isAuthorized: true });
     try {
+      // isAuthorized:true
       const res = await axios.post<AuthUser>(`${baseURL}/auth/login`, data);
       set({ authUser: res.data });
       toast.success('Login successful');
@@ -136,15 +138,16 @@ export const useAuthStore = create<AuthStore>((set, get) => ({
       toast.error(error.response?.data?.message || 'Login failed');
       return false;
     } finally {
-      set({ isLoggingIN: false });
+      // set({ isAuthorized: false });
     }
   },
 
   getPosts: async () => {
     set({ isLoading: true });
+    // set({ isAuthorized: true });
     try {
       const res = await axios.get<{ posts: Post[] }>(`${baseURL}/posts`);
-      // console.log(res.data)/
+
       set({ posts: res.data.posts });
       return true;
     } catch (error: any) {
@@ -156,6 +159,7 @@ export const useAuthStore = create<AuthStore>((set, get) => ({
   },
 
   getSinglePost: async (postId: string) => {
+    // set({ isAuthorized: true });
     try {
       const res = await axios.get(`${baseURL}/posts/${postId}`);
       console.log(res.data);
@@ -168,7 +172,7 @@ export const useAuthStore = create<AuthStore>((set, get) => ({
   },
 
   likePost: async (postId: string) => {
-    // set({ isLoading: true });
+    // set({ isAuthorized: true });
     try {
       const res = await axios.post<{ liked: boolean }>(
         `${baseURL}/posts/${postId}/like`
@@ -195,6 +199,7 @@ export const useAuthStore = create<AuthStore>((set, get) => ({
   },
 
   repostPost: async (postId: string) => {
+    // set({ isAuthorized: true });
     try {
       const res = await axios.post<{ reposted: boolean }>(
         `${baseURL}/posts/${postId}/repost`
@@ -221,6 +226,7 @@ export const useAuthStore = create<AuthStore>((set, get) => ({
   },
 
   postComments: async (postId: string, content: string) => {
+    // set({ isAuthorized: true });
     set({ isLoading: true });
     try {
       const res = await axios.post(`${baseURL}/posts/${postId}/comments`, {
@@ -236,6 +242,7 @@ export const useAuthStore = create<AuthStore>((set, get) => ({
   },
 
   getComments: async (postId: string) => {
+    // set({ isAuthorized: true });
     set({ isLoading: true });
     try {
       const res = await axios.get(`${baseURL}/posts/${postId}/comments`);
@@ -249,6 +256,7 @@ export const useAuthStore = create<AuthStore>((set, get) => ({
   },
 
   getProfile: async () => {
+    // set({ isAuthorized: true });
     set({ isLoading: true });
     try {
       const res = await axios.get(`${baseURL}/profile`);
